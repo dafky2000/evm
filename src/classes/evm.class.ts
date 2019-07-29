@@ -78,6 +78,22 @@ class EVM {
         if (this.opcodes.length === 0) {
             for (let index = 0; index < this.code.length; index++) {
                 const currentOp = findOpcode(this.code[index], true);
+
+                if (currentOp.name === 'INVALID') {
+                    const converted = this.code.slice(index, index + 32).toString('hex');
+                    const found = Object.keys(eventHashes).find(hash => converted === hash);
+
+                    if (found) {
+                        currentOp.name = 'PUSH32';
+                        currentOp.opcode = 127;
+                        currentOp.pushData = converted;
+                        currentOp.pc = index;
+                        index += 32;
+                        this.opcodes.push(currentOp);
+                        continue;
+                    }
+                }
+
                 currentOp.pc = index;
                 this.opcodes.push(currentOp);
                 if (currentOp.name.startsWith('PUSH')) {
