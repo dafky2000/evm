@@ -1,4 +1,4 @@
-const findOpcode = require('../../node_modules/ethereumjs-vm/dist/opcodes.js');
+import { lookupOpInfo } from '../../node_modules/ethereumjs-vm/dist/evm/opcodes.js';
 import * as functionHashes from '../../data/functionHashes.json';
 import * as eventHashes from '../../data/eventHashes.json';
 import opcodeFunctions from '../utils/opcodes';
@@ -77,16 +77,18 @@ class EVM {
     getOpcodes(): Opcode[] {
         if (this.opcodes.length === 0) {
             for (let index = 0; index < this.code.length; index++) {
-                const currentOp = findOpcode(this.code[index], true);
+                const currentOp: any = lookupOpInfo(this.code[index], true);
 
                 if (currentOp.name === 'INVALID') {
-                    const converted = this.code.slice(index, index + 32).toString('hex');
-                    const found = Object.keys(eventHashes).find(hash => converted === hash);
+                    const pushData = this.code.slice(index, index + 32);
+                    const foundHash = Object.keys(eventHashes).find(
+                        hash => pushData.toString('hex') === hash
+                    );
 
-                    if (found) {
+                    if (foundHash) {
                         currentOp.name = 'PUSH32';
                         currentOp.opcode = 127;
-                        currentOp.pushData = converted;
+                        currentOp.pushData = pushData;
                         currentOp.pc = index;
                         index += 32;
                         this.opcodes.push(currentOp);
