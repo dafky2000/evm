@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MrLuit/evm.git"
+    "url": "git+https://github.com/dafky2000/evm.git"
   },
   "author": "Luit",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MrLuit/evm/issues"
+    "url": "https://github.com/dafky2000/evm/issues"
   },
-  "homepage": "https://github.com/MrLuit/evm#readme",
+  "homepage": "https://github.com/dafky2000/evm#readme",
   "keywords": [
     "ethereum",
     "evm",
