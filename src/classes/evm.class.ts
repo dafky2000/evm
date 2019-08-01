@@ -77,13 +77,18 @@ class EVM {
     getOpcodes(): Opcode[] {
         if (this.opcodes.length === 0) {
             for (let index = 0; index < this.code.length; index++) {
-                const currentOp: any = lookupOpInfo(this.code[index], true);
+                const oplen = this.opcodes.length;
+                let currentOp: any = {};
 
-                if (currentOp.name === 'INVALID') {
+                if (
+                    oplen >= 3 &&
+                    this.opcodes[oplen - 3].opcode === 0x61 &&
+                    this.opcodes[oplen - 2].opcode === 0x56 &&
+                    this.opcodes[oplen - 1].opcode === 0x00
+                ) {
                     const pushData = this.code.slice(index, index + 32);
-                    const foundHash = Object.keys(eventHashes).find(
-                        hash => pushData.toString('hex') === hash
-                    );
+                    const pushDataString = pushData.toString('hex');
+                    const foundHash = Object.keys(eventHashes).includes(pushDataString);
 
                     if (foundHash) {
                         currentOp.name = 'PUSH32';
@@ -96,6 +101,7 @@ class EVM {
                     }
                 }
 
+                currentOp = lookupOpInfo(this.code[index], true);
                 currentOp.pc = index;
                 this.opcodes.push(currentOp);
                 if (currentOp.name.startsWith('PUSH')) {
