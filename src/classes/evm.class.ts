@@ -80,16 +80,16 @@ class EVM {
                 const oplen = this.opcodes.length;
                 let currentOp: any = {};
 
+                // For example: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942 Transfer(addres,address,uint256) is not parsed
                 if (
-                    oplen >= 3 &&
-                    this.opcodes[oplen - 3].opcode === 0x61 &&
+                    oplen >= 2 &&
                     this.opcodes[oplen - 2].opcode === 0x56 &&
                     this.opcodes[oplen - 1].opcode === 0x00
                 ) {
                     const pushData = this.code.slice(index, index + 32);
                     const pushDataString = pushData.toString('hex');
-                    const foundHash = Object.keys(eventHashes).includes(pushDataString);
 
+                    const foundHash = Object.keys(eventHashes).includes(pushDataString);
                     if (foundHash) {
                         currentOp.name = 'PUSH32';
                         currentOp.opcode = 127;
