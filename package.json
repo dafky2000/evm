@@ -14,7 +14,7 @@
     "build": "npm run build:hashes && webpack",
     "build:prod": "cross-env NODE_ENV=production npm run build",
     "build:hashes": "ts-node ./scripts/build.ts",
-    "postinstall": "npm run build",
+    "prepare": "npm run build",
     "prettier:diff": "prettier --write --config ./.prettierrc --list-different 'src/**/*.ts'"
   },
   "repository": {
