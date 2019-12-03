@@ -4,7 +4,7 @@
 [![](https://img.shields.io/david/MrLuit/evm.svg?style=flat-square)](https://david-dm.org/MrLuit/evm)
 [![](https://img.shields.io/github/license/MrLuit/evm.svg?style=flat-square)](https://github.com/MrLuit/evm/blob/master/LICENSE)
     
-An [Ethereum Virtual Machine (EVM)](https://medium.com/@jeff.ethereum/optimising-the-ethereum-virtual-machine-58457e61ca15) interpreter and decompiler, along with several other utils for programmatically extracting information from bytecode.
+An [Ethereum Virtual Machine (EVM)](https://medium.com/mycrypto/the-ethereum-virtual-machine-how-does-it-work-9abac2b7c9e) interpreter and decompiler, along with several other utils for programmatically extracting information from bytecode.
 
 ## Usage
 
@@ -14,6 +14,8 @@ An [Ethereum Virtual Machine (EVM)](https://medium.com/@jeff.ethereum/optimising
 - **Converting bytecode to opcodes**
 - **Reading information like events or functions from either bytecode or tx data**
 - **Extracting the [swarm hash](https://github.com/ethereum/wiki/wiki/Swarm-Hash) (if any) from bytecode**
+- **Checking whether an opcode exists and is reachable within bytecode**
+- **Detecting whether contracts are compliant to certain ERCs**
 
 ## API
 
@@ -23,11 +25,13 @@ An [Ethereum Virtual Machine (EVM)](https://medium.com/@jeff.ethereum/optimising
 * **getOpcodes()** - _Returns opcodes including pc and pushData (if included)_
 * **getFunctions()** - _Parse functions from their signatures in bytecode_
 * **getEvents()** - _Parse events from their signatures in bytecode_
+- **containsOpcode(opcode)** - _Check whether an opcode exists and is reachable within bytecode_
 * **getJumpDestinations()** - _Get array of program counters from JUMPDEST opcodes_
 * **getSwarmHash()** - _Get [Swarm hash](https://github.com/ethereum/wiki/wiki/Swarm-Hash) (if any) for [contract metadata](https://solidity.readthedocs.io/en/v0.5.2/metadata.html)_
 * **reset()** - _Reset the EVM state (stack, memory, etc.)_
 * **parse()** - _Interpret opcodes by looping over them, returns array of interpreted opcodes_
 * **decompile()** - _Decompile bytecode into readable [Solidity](https://en.wikipedia.org/wiki/Solidity)-like pseudocode_
+* **isERC165()** - _Detect whether contract is [ERC165](https://eips.ethereum.org/EIPS/eip-165)-compliant_
 
 ## Examples
 
@@ -71,6 +75,8 @@ web3.eth.getCode("0x06012c8cf97BEaD5deAe237070F9587f8E7A266d").then(code => {  /
     console.log(evm.getFunctions());  /* Get functions */
     console.log(evm.getEvents());  /* Get events */
     console.log(evm.decompile());  /* Decompile bytecode */
+    console.log(evm.containsOpcode("SELFDESTRUCT")); /* Check whether contract contains a SELFDESTRUCT */
+    console.log(evm.isERC165()); /* Detect whether contract is ERC165-compliant */
 });
 ```
 
@@ -84,6 +90,8 @@ web3.eth.getCode("0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359", function(err,code
     console.log(evm.getFunctions());  /* Get functions */
     console.log(evm.getEvents());  /* Get events */
     console.log(evm.decompile());  /* Decompile bytecode */
+    console.log(evm.containsOpcode("SELFDESTRUCT")); /* Check whether contract contains a SELFDESTRUCT */
+    console.log(evm.isERC165()); /* Detect whether contract is ERC165-compliant */
 });
 ```
 

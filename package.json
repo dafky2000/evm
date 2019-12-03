@@ -1,6 +1,6 @@
 {
-  "name": "evm-bugfix",
-  "version": "0.2.2",
+  "name": "evm",
+  "version": "0.3.0",
   "description": "An ethereum virtual machine (EVM) bytecode decompiler",
   "main": "lib/EVM.node.js",
   "module": "lib/EVM.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "tscheck": "tsc --noEmit --project tsconfig.json",
     "tslint": "tslint --project .",
-    "test": "mocha -r ts-node/register tests/**/*.ts",
+    "test": "mocha -r ts-node/register ./tests/index.ts",
     "prepublishOnly": "npm run clean && npm run build:prod",
     "clean": "rimraf ./lib",
     "build": "npm run build:hashes && webpack",
@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dafky2000/evm.git"
+    "url": "git+https://github.com/MrLuit/evm.git"
   },
-  "author": "Luit",
+  "author": "Luit Hollander <luit@hollander.email> (https://luit.me)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dafky2000/evm/issues"
+    "url": "https://github.com/MrLuit/evm/issues"
   },
-  "homepage": "https://github.com/dafky2000/evm#readme",
+  "homepage": "https://github.com/MrLuit/evm#readme",
   "keywords": [
     "ethereum",
     "evm",
@@ -57,6 +57,7 @@
     "mocha": "5.2.0",
     "prettier": "1.15.3",
     "rimraf": "2.6.2",
+    "solc": "0.5.5",
     "ts-node": "7.0.1",
     "tslint": "5.12.0",
     "tslint-config-prettier": "1.17.0",
