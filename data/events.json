@@ -17560,6 +17560,7 @@
     "Transfer(address,address,string,uint256)",
     "Transfer(address,address,string)",
     "Transfer(address,address,uint128)",
+    "Transfer(address,address,uint256,address,bytes,bytes)",
     "Transfer(address,address,uint256,address,bytes)",
     "Transfer(address,address,uint256,address)",
     "Transfer(address,address,uint256,bytes)",

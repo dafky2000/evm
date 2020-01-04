@@ -111,5 +111,5 @@ export default (opcode: Opcode, state: EVM): void => {
     state.stack.push(
         new CALL(gas, address, value, memoryStart, memoryLength, outputStart, outputLength)
     );
-    state.memory[outputStart] = 'output';
+    // state.memory[outputStart] = 'output';
 };

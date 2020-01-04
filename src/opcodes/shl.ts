@@ -25,9 +25,13 @@ export class SHL {
 export default (opcode: Opcode, state: EVM): void => {
     const left = state.stack.pop();
     const right = state.stack.pop();
-    if (BigNumber.isInstance(left) && BigNumber.isInstance(right)) {
-        state.stack.push(left.shiftLeft(right));
-    } else {
-        state.stack.push(new SHL(left, right));
+    try {
+        if (BigNumber.isInstance(left) && BigNumber.isInstance(right)) {
+            state.stack.push(left.shiftLeft(right));
+        } else {
+            state.stack.push(new SHL(left, right));
+        }
+    } catch (error) {
+        console.error(error);
     }
 };

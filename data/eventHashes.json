@@ -17560,6 +17560,7 @@
     "1d30d3db8e01fa0d5626c471596f822f597e720c26a2930ef20d3387313c3d78": "Transfer(address,address,string,uint256)",
     "55e10366a5f552746106978b694d7ef3bbddec06bd5f9b9d15ad46f475c653ef": "Transfer(address,address,string)",
     "27772adc63db07aae765b71eb2b533064fa781bd57457e1b138592d8198d0959": "Transfer(address,address,uint128)",
+    "8988d59efc2c4547ef86c88f6543963bab0cea94f8e486e619c7c3a790db93be": "Transfer(address,address,uint256,address,bytes,bytes)",
     "d5c97f2e041b2046be3b4337472f05720760a198f4d7d84980b7155eec7cca6f": "Transfer(address,address,uint256,address,bytes)",
     "5f2147fb558c977441fbdfebcf8cd5776606adc8da5ff95566fc2a4137e54d13": "Transfer(address,address,uint256,address)",
     "e19260aff97b920c7df27010903aeb9c8d2be5d310a2c67824cf3f15396e4c16": "Transfer(address,address,uint256,bytes)",

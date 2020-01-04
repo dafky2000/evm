@@ -20,23 +20,22 @@ export class MappingLoad {
     readonly type?: string;
     readonly wrapped: boolean;
     readonly location: any;
-    readonly count: any;
     readonly items: any;
     readonly structlocation?: any;
     readonly mappings: any;
 
-    constructor(mappings: any, location: any, items: any, count: any, structlocation?: any) {
+    constructor(mappings: any, location: any, items: any, structlocation?: any) {
         this.name = 'MappingLoad';
         this.wrapped = false;
+        this.mappings = mappings;
         this.location = location;
-        this.count = count;
         this.items = items;
         this.structlocation = structlocation;
-        this.mappings = mappings;
     }
 
     toString() {
-        let mappingName = 'mapping' + (this.count + 1);
+        const count = Object.keys(this.mappings()).indexOf(this.location.toString());
+        let mappingName = 'mapping' + (count + 1);
         if (this.location in this.mappings() && this.mappings()[this.location].name) {
             mappingName = this.mappings()[this.location].name;
         }
@@ -105,14 +104,7 @@ export default (opcode: Opcode, state: EVM): void => {
                 };
             }
             state.mappings[mappingLocation].keys.push(mappingParts);
-            state.stack.push(
-                new MappingLoad(
-                    () => state.mappings,
-                    mappingLocation,
-                    mappingParts,
-                    Object.keys(state.mappings).indexOf(mappingLocation.toString())
-                )
-            );
+            state.stack.push(new MappingLoad(() => state.mappings, mappingLocation, mappingParts));
         } else {
             state.stack.push(new SLOAD(storeLocation, () => state.variables));
         }
@@ -143,7 +135,6 @@ export default (opcode: Opcode, state: EVM): void => {
                     () => state.mappings,
                     mappingLocation,
                     mappingParts,
-                    Object.keys(state.mappings).indexOf(mappingLocation.toString()),
                     storeLocation.right
                 )
             );
@@ -177,7 +168,6 @@ export default (opcode: Opcode, state: EVM): void => {
                     () => state.mappings,
                     mappingLocation,
                     mappingParts,
-                    Object.keys(state.mappings).indexOf(mappingLocation.toString()),
                     storeLocation.left
                 )
             );

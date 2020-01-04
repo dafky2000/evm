@@ -3,6 +3,7 @@ import Opcode from '../interfaces/opcode.interface';
 import { MLOAD } from './mload';
 import * as eventHashes from '../../data/eventHashes.json';
 import * as BigNumber from '../../node_modules/big-integer';
+import { CODECOPY } from './codecopy';
 
 export class LOG {
     readonly name: string;
@@ -54,7 +55,21 @@ export default (opcode: Opcode, state: EVM): void => {
         topics.push(state.stack.pop());
     }
     if (topics.length > 0) {
-        const eventTopic = topics[0].toString(16);
+        let eventTopic = topics[0].toString(16);
+
+        // A hack?
+        if (eventTopic && eventTopic.startsWith('this.code')) {
+            // const eventTopic = eval(topics[0].toString(16));
+            const regex = /this\.code\[(?<start>[0-9a-f]+):\((?<offset>[0-9a-f]+)\+(?<size>[0-9a-f]+)\)\]/;
+
+            let { start, offset, size } = eventTopic.match(regex).groups;
+            start = parseInt(start, 16);
+            offset = parseInt(offset, 16);
+            size = parseInt(size, 16);
+
+            eventTopic = state.code.slice(start, offset + size).toString('hex');
+        }
+
         if (!(eventTopic in state.events)) {
             state.events[eventTopic] = {};
             state.events[eventTopic].indexedCount = topics.length - 1;

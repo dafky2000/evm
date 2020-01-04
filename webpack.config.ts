@@ -62,4 +62,4 @@ const node: Configuration = merge.smart(config, {
     }
 });
 
-export default [browser, node];
+export default [node];

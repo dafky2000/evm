@@ -69,6 +69,6 @@ describe('functions.json', () => {
             }
         });
     })
-        .timeout(20000)
+        .timeout(60000)
         .slow(10000);
 });

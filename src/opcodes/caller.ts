@@ -8,7 +8,7 @@ export class CALLER {
 
     constructor() {
         this.name = 'CALLER';
-        this.name = 'address';
+        this.type = 'address';
         this.wrapped = false;
     }
 
